@@ -1,0 +1,70 @@
+using Infrastructure;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Services;
+using System.Text;
+
+var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
+builder.AddServiceDefaults();
+builder.Services.AddInfrastructure();
+builder.Services.AddServices();
+builder.Services
+    .AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme=JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme=JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultScheme=JwtBearerDefaults.AuthenticationScheme;
+    }).AddJwtBearer(opt => {
+        opt.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+            .GetBytes(configuration.GetSection("AppSettings:Token").Value)),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
+builder.Services.AddAuthorization();
+// Add services to the container.
+builder.Services.AddDbContext<CoreContext>(options=>options.UseNpgsql("name=ConnectionStrings:Kcal"));
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+app.UseCors(builder => builder
+     .WithOrigins(["localhost"]) // Or specify allowed origins
+     .AllowAnyMethod()
+     .AllowAnyHeader()
+     .AllowCredentials()
+     );
+app.MapDefaultEndpoints();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+app.Use(async (context, next) =>
+{
+    await next();
+
+    if (context.Response.StatusCode == (int)System.Net.HttpStatusCode.Unauthorized)
+    {
+        await context.Response.WriteAsync("Token Validation Has Failed. Request Access Denied");
+    }
+});
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();

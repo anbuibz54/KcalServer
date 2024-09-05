@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35122.118
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KcalServer", "KcalServer\KcalServer.csproj", "{83B82A0E-0632-44F0-9DF4-32365AADC369}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KcalServer.AppHost", "KcalServer.AppHost\KcalServer.AppHost.csproj", "{7BC49C73-BED9-4B1D-B697-53090BAAA232}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KcalServer.ServiceDefaults", "KcalServer.ServiceDefaults\KcalServer.ServiceDefaults.csproj", "{D83F6FD6-C574-405C-84D9-56BC964096F8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{9227A634-96F7-408B-9F1A-78CCF4089C46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{40295537-2EC1-414D-B2AB-D5BD8A596C4B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{AD5BAB44-1956-4F79-9694-274CC609A9FD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{83B82A0E-0632-44F0-9DF4-32365AADC369}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83B82A0E-0632-44F0-9DF4-32365AADC369}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83B82A0E-0632-44F0-9DF4-32365AADC369}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83B82A0E-0632-44F0-9DF4-32365AADC369}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BC49C73-BED9-4B1D-B697-53090BAAA232}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BC49C73-BED9-4B1D-B697-53090BAAA232}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BC49C73-BED9-4B1D-B697-53090BAAA232}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BC49C73-BED9-4B1D-B697-53090BAAA232}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D83F6FD6-C574-405C-84D9-56BC964096F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D83F6FD6-C574-405C-84D9-56BC964096F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D83F6FD6-C574-405C-84D9-56BC964096F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D83F6FD6-C574-405C-84D9-56BC964096F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9227A634-96F7-408B-9F1A-78CCF4089C46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9227A634-96F7-408B-9F1A-78CCF4089C46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9227A634-96F7-408B-9F1A-78CCF4089C46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9227A634-96F7-408B-9F1A-78CCF4089C46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40295537-2EC1-414D-B2AB-D5BD8A596C4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40295537-2EC1-414D-B2AB-D5BD8A596C4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40295537-2EC1-414D-B2AB-D5BD8A596C4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40295537-2EC1-414D-B2AB-D5BD8A596C4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD5BAB44-1956-4F79-9694-274CC609A9FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD5BAB44-1956-4F79-9694-274CC609A9FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD5BAB44-1956-4F79-9694-274CC609A9FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD5BAB44-1956-4F79-9694-274CC609A9FD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1B4F12BD-516E-4F80-8708-0DF8CC491BA1}
+	EndGlobalSection
+EndGlobal
