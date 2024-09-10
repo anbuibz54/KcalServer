@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Services.Mapper;
 using Services.User;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,8 @@ namespace Services
     public static class ServiceDI
     {
         public static IServiceCollection AddServices(this IServiceCollection services) { 
-            services.AddSingleton<IUserService, UserService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddAutoMapper(typeof(IMapperMarkerAssembly));
             return services;
         }
     }

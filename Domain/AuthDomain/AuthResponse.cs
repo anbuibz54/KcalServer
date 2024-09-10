@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.UserDomain
+namespace Domain.AuthDomain
 {
-    public class User
+    public class AuthResponse
     {
         public long Id { get; set; }
 
@@ -14,7 +14,7 @@ namespace Domain.UserDomain
         public string? Phone { get; set; }
 
         public string Email { get; set; } = null;
+        public string AccessToken { get; set; }
 
-        public string Password { get; set; } = null!;
     }
 }
