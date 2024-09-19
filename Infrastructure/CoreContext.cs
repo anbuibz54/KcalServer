@@ -35,7 +35,6 @@ public partial class CoreContext : DbContext
 
     public virtual DbSet<Migration> Migrations { get; set; }
 
-    public virtual DbSet<Object> Objects { get; set; }
 
 
     public virtual DbSet<Product> Products { get; set; }
@@ -302,7 +301,7 @@ public partial class CoreContext : DbContext
         modelBuilder.Entity<User>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("Users_pkey");
-
+ 
             entity.ToTable("Users");
 
             entity.HasIndex(e => e.Email, "Users_email_key").IsUnique();

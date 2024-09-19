@@ -44,6 +44,7 @@ namespace Services.User
                 throw new Exception("Wrong Password");
             }
             var res = _mapper.Map<AuthResponse>(document);
+            res.AccessToken = CreateToken(res.Id);
             return res;
 
         }

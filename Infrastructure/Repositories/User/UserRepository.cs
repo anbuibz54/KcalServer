@@ -43,6 +43,7 @@ namespace Infrastructure.Repositories.User
             if (document != null)
             {
                 var res = _mapper.Map<UserDomain>(document);
+                return res;
             }
             return null;
         }

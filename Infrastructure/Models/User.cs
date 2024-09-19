@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Infrastructure.Models;
 
-public partial class User
+public  class User
 {
     public long Id { get; set; }
 
