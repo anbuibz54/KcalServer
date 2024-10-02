@@ -1,6 +1,7 @@
 ﻿using Domain.AuthDomain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Models.UserModels;
 using Services.User;
 
 namespace KcalServer.Controllers.User
@@ -37,6 +38,19 @@ namespace KcalServer.Controllers.User
             try
             {
                 var res = await _userService.Login(input);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPost, Route("update-user-infor")]
+        public async Task<IActionResult> UpdateUserInfor(UserInforModel input)
+        {
+            try
+            {
+                var res = await _userService.UpdateUserInfor(input);
                 return Ok(res);
             }
             catch (Exception ex)

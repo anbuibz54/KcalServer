@@ -1,4 +1,5 @@
 ﻿using Domain.AuthDomain;
+using Models.UserModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,6 @@ namespace Services.User
         public Task<AuthResponse> Register(AuthInput user);
         public Task<AuthResponse> Login(AuthInput user);
         public Task  Auth(string token);
+        public Task<UserInforResponse> UpdateUserInfor(UserInforModel user);
     }
 }

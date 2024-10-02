@@ -30,7 +30,7 @@ builder.Services
     });
 builder.Services.AddAuthorization();
 // Add services to the container.
-builder.Services.AddDbContext<CoreContext>(options=>options.UseNpgsql("name=ConnectionStrings:Kcal"));
+builder.Services.AddDbContext<CoreContext>(options=>options.UseNpgsql(configuration.GetSection("ConnectionStrings:Kcal").Value));
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(MyAllowSpecificOrigins,

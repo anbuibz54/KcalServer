@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models.UserModels.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace Infrastructure.Models;
@@ -19,6 +20,9 @@ public  class User
 
     public float? Weight { get; set; }
 
+    public Gender? Gender { get; set; }
+    public int? Age { get; set; }
+
     public long? ActivityRateId { get; set; }
 
     public string? Carts { get; set; }
@@ -34,4 +38,16 @@ public  class User
     public virtual ICollection<Shop> Shops { get; set; } = new List<Shop>();
 
     public virtual ICollection<UsersRecipe> UsersRecipes { get; set; } = new List<UsersRecipe>();
+    public void Update(User u)
+    {
+        foreach (var item in u.GetType().GetProperties())
+        {
+            if (item.Name == "Id") continue;
+            if (item.PropertyType == typeof(int) && item.GetValue(u).ToString() == "0") continue;
+            if (item.PropertyType == typeof(double) && item.GetValue(u).ToString() == "0") continue;
+            if (item.GetValue(u) == null) continue;
+            this.GetType().GetProperty(item.Name).SetValue(this, item.GetValue(u));
+        }
+        u.CreatedAt = DateTime.Now;
+    }
 }
