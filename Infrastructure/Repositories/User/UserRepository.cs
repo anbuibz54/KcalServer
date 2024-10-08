@@ -48,9 +48,21 @@ namespace Infrastructure.Repositories.User
             return null;
         }
 
-        public Task<Domain.UserDomain.User> GetByIdAsync(int id)
+        public async Task<Domain.UserDomain.User> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var entity = await _coreContext.Users.FirstOrDefaultAsync(u => u.Id == id);
+            if (entity == null) { throw new Exception("User does not exist"); }
+            return _mapper.Map<UserDomain>(entity);
+        }
+
+        public async Task<UserDomain> UpdateAsync(UserDomain user)
+        {
+            var entity = await _coreContext.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
+            if (entity == null) { throw new Exception("User does not exist"); }
+            entity.Update(_mapper.Map<UserEntity>(user));
+            _coreContext.SaveChanges();
+            var res = _mapper.Map<UserDomain>(entity);
+            return res;
         }
     }
 }

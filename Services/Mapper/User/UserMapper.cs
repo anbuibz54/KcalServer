@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.AuthDomain;
+using Models.UserModels;
 
 namespace Services.Mapper.User
 {
@@ -15,6 +16,9 @@ namespace Services.Mapper.User
         public UserMapper() {
             CreateMap<UserDomain, UserEntity>();
             CreateMap<UserEntity, UserDomain>();
+            CreateMap<UserDomain,UserInforModel>();
+            CreateMap<UserInforModel, UserDomain>();
+            CreateMap<UserDomain,UserInforResponse>();
             CreateMap<AuthInput,UserDomain>();
             CreateMap<UserDomain, AuthResponse>();
         }

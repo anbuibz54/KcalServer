@@ -1,4 +1,6 @@
-﻿using Domain.UserDomain;
+﻿using Domain.ActivityRateDomain;
+using Domain.UserDomain;
+using Infrastructure.Repositories.ActivityRate;
 using Infrastructure.Repositories.User;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -14,6 +16,7 @@ namespace Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddScoped<IActivityRateRepository,ActivityRateRepository>();
             return services;
         }
     }

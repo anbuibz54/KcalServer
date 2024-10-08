@@ -14,6 +14,10 @@ using System.Text;
 using System.Threading.Tasks;
 using UserDomain = Domain.UserDomain.User;
 using BC = BCrypt.Net.BCrypt;
+using Models.UserModels;
+using UserEntity =Infrastructure.Models.User;
+using Domain.ActivityRateDomain;
+using Models.ActivityRateModels;
 namespace Services.User
 {
     public class UserService:IUserService
@@ -21,16 +25,30 @@ namespace Services.User
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
-        public UserService(IUserRepository userRepository, IMapper mapper, IConfiguration configuration)
+        private readonly IActivityRateRepository _activityRateRepository;
+        public UserService(IUserRepository userRepository, IMapper mapper, IConfiguration configuration,IActivityRateRepository activityRateRepository)
         {
             _mapper = mapper;
             _userRepository = userRepository;
             _configuration = configuration;
+            _activityRateRepository = activityRateRepository;
         }
 
         public Task Auth(string token)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<UserInforResponse> UpdateUserInfor(UserInforModel user)
+        {
+            var domain = _mapper.Map<UserDomain>(user);
+            var updatedUser = await _userRepository.UpdateAsync(domain);
+            var activity = await _activityRateRepository.GetAsync((int)user.ActivityRateId);
+            var res = _mapper.Map<UserInforResponse>(updatedUser);
+            res.ActivityRate = _mapper.Map<ActivityRateModel>(activity);
+            res.Tdee = await CalculateUserTdee(user);
+            return res;
+
         }
 
         public async Task<AuthResponse> Login(AuthInput user)
@@ -81,6 +99,30 @@ namespace Services.User
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
             return jwt;
+        }
+        public async Task<double> CalculateUserTdee(UserInforModel user)
+        {
+            double bmr = 0;
+            switch (user.Gender)
+            {
+                case Models.UserModels.Enums.Gender.Male:
+                    {
+                        bmr = 88.362 + (13.397 * user.Weight.Value) + (4.799 * user.Height.Value) - (5.677 * user.Age.Value);
+                        break;
+                    }
+                case Models.UserModels.Enums.Gender.Female:
+                    {
+                        bmr = 447.593 + (9.247 * user.Weight.Value) + (3.098 * user.Height.Value) - (4.330 * user.Age.Value);
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
+            }
+            var activity = await _activityRateRepository.GetAsync((int)user.ActivityRateId);
+            var tdee = activity.Value * bmr;
+            return tdee.Value;
         }
     }
 }

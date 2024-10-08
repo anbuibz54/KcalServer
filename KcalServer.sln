@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KcalServer.ServiceDefaults"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{9227A634-96F7-408B-9F1A-78CCF4089C46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{40295537-2EC1-414D-B2AB-D5BD8A596C4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{40295537-2EC1-414D-B2AB-D5BD8A596C4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{AD5BAB44-1956-4F79-9694-274CC609A9FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{AD5BAB44-1956-4F79-9694-274CC609A9FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{1B043497-9160-42C7-9EA4-29DC9A8DBF5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{AD5BAB44-1956-4F79-9694-274CC609A9FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD5BAB44-1956-4F79-9694-274CC609A9FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD5BAB44-1956-4F79-9694-274CC609A9FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B043497-9160-42C7-9EA4-29DC9A8DBF5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B043497-9160-42C7-9EA4-29DC9A8DBF5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B043497-9160-42C7-9EA4-29DC9A8DBF5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B043497-9160-42C7-9EA4-29DC9A8DBF5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

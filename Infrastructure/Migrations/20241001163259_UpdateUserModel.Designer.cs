@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(CoreContext))]
-    [Migration("20240919173456_Initial")]
-    partial class Initial
+    [Migration("20241001163259_UpdateUserModel")]
+    partial class UpdateUserModel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -460,6 +460,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("activity_rate_id");
 
+                    b.Property<int?>("Age")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Carts")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("jsonb")
@@ -475,6 +478,9 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("text")
                         .HasColumnName("email");
+
+                    b.Property<int?>("Gender")
+                        .HasColumnType("integer");
 
                     b.Property<float?>("Height")
                         .HasColumnType("real")
