@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Models;
+using Models.ActivityRateModels;
 using Services.ActivityRate;
 
 namespace KcalServer.Controllers.ActivityRate
@@ -8,10 +10,10 @@ namespace KcalServer.Controllers.ActivityRate
     public class ActivityRateController(IActivityRateService activityRateService):ControllerBase
     {
         [HttpGet("all")]
-        public async Task<IActionResult> GetAll()
+        public async Task<ApiResult<IList<ActivityRateModel>>> GetAll()
         {
             var res = await activityRateService.GetAll();
-            return Ok(res);
+            return new ApiResult<IList<ActivityRateModel>>().Succeed(res);
         }
     }
 }

@@ -26,10 +26,10 @@ namespace Models
             IsSuccess = false;
             return this;
         }
-        public ApiResult<T> Succeed(int statusCode, string message, T data)
+        public ApiResult<T> Succeed( T data)
         {
-            StatusCode = statusCode;
-            Message = message;
+            StatusCode = 200;
+            Message = "";
             Data = data;
             IsSuccess = true;
             return this;

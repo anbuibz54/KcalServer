@@ -10,6 +10,7 @@ using System.Text;
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
+builder.Services.AddHttpContextAccessor();
 builder.AddServiceDefaults();
 builder.Services.AddInfrastructure();
 builder.Services.AddServices();

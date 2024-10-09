@@ -38,6 +38,6 @@ public class WeatherForecastController : ControllerBase
         .ToArray();
         weatherForeCast.GetRandomCelcius();
         var res = new ApiResult<IEnumerable<WeatherForecast>>();
-        return res.Succeed(200, "", data);
+        return res.Succeed( data);
     }
 }
