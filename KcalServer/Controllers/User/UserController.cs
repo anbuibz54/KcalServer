@@ -1,6 +1,7 @@
 ﻿using Domain.AuthDomain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Models;
 using Models.UserModels;
 using Services.User;
 
@@ -20,43 +21,24 @@ namespace KcalServer.Controllers.User
             return Ok("Valid");
         }
         [HttpPost, Route("register")]
-        public async Task<IActionResult> Register(AuthInput input)
+        public async Task<ApiResult<AuthResponse>> Register(AuthInput input)
         {
-            try
-            {
                 var res = await _userService.Register(input);
-                return Ok(res);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+                
+                return new ApiResult<AuthResponse>().Succeed(res);
         }
         [HttpPost, Route("login")]
-        public async Task<IActionResult> Login(AuthInput input)
+        public async Task<ApiResult<AuthResponse>> Login(AuthInput input)
         {
-            try
-            {
-                var res = await _userService.Login(input);
-                return Ok(res);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var res = await _userService.Register(input);
+
+            return new ApiResult<AuthResponse>().Succeed(res);
         }
         [HttpPost, Route("update-user-infor")]
-        public async Task<IActionResult> UpdateUserInfor(UserInforModel input)
+        public async Task<ApiResult<UserInforResponse>> UpdateUserInfor(UserInforModel input)
         {
-            try
-            {
                 var res = await _userService.UpdateUserInfor(input);
-                return Ok(res);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+                return new ApiResult<UserInforResponse>().Succeed(res);
         }
 
 

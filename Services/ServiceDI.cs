@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Services.ActivityRate;
+using Services.Claims;
 using Services.Mapper;
 using Services.User;
+using Services.Weather;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +18,8 @@ namespace Services
             services.AddAutoMapper(typeof(IMapperMarkerAssembly));
             services.AddTransient<IUserService, UserService>();
             services.AddScoped<IActivityRateService, ActivityService>();
+            services.AddScoped<IWeatherForeCast,WeatherForeCastService>();
+            services.AddSingleton<IClaimService,ClaimService>();
             return services;
         }
     }
