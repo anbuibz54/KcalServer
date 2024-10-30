@@ -25,7 +25,7 @@ namespace Domain.UserDomain
 
         public Gender? Gender { get; set; }
         public int? Age { get; set; }
-        public long ActivityRateId { get; set; }
+        public long? ActivityRateId { get; set; }
         
     }
 }

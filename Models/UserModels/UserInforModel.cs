@@ -17,19 +17,19 @@ namespace Models.UserModels
         public Gender? Gender { get; set; }
         public int? Age { get; set; }
 
-        public long ActivityRateId { get; set; }
+        public long? ActivityRateId { get; set; }
         public double? Tdee {  get; set; }
     }
     public class UserInforResponse : BaseModel
     {
-        public float? Height { get; set; }
+        public float? Height { get; set; } = 0;
 
-        public float? Weight { get; set; }
+        public float? Weight { get; set; } = 0;
 
-        public Gender? Gender { get; set; }
-        public int? Age { get; set; }
+        public Gender? Gender { get; set; } = Enums.Gender.Male;
+        public int? Age { get; set; } = 0;
 
-        public ActivityRateModel? ActivityRate { get; set; }
-        public double? Tdee { get; set; }
+        public long? ActivityRateId { get; set; } = 1;
+        public double? Tdee { get; set; } = 0;
     }
 }

@@ -12,7 +12,8 @@ namespace Services.User
     {
         public Task<AuthResponse> Register(AuthInput user);
         public Task<AuthResponse> Login(AuthInput user);
-        public Task  Auth(string token);
+        public Task Auth(string token);
+        public Task<UserInforResponse> GetById(int id);
         public Task<UserInforResponse> UpdateUserInfor(UserInforModel user);
     }
 }

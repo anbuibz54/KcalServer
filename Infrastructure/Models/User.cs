@@ -48,6 +48,6 @@ public  class User
             if (item.GetValue(u) == null) continue;
             this.GetType().GetProperty(item.Name).SetValue(this, item.GetValue(u));
         }
-        u.CreatedAt = DateTime.Now;
+        u.CreatedAt = DateTime.UtcNow;
     }
 }

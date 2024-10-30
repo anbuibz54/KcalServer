@@ -45,7 +45,6 @@ namespace Services.User
             var updatedUser = await _userRepository.UpdateAsync(domain);
             var activity = await _activityRateRepository.GetAsync((int)user.ActivityRateId);
             var res = _mapper.Map<UserInforResponse>(updatedUser);
-            res.ActivityRate = _mapper.Map<ActivityRateModel>(activity);
             res.Tdee = await CalculateUserTdee(user);
             return res;
 
@@ -123,6 +122,13 @@ namespace Services.User
             var activity = await _activityRateRepository.GetAsync((int)user.ActivityRateId);
             var tdee = activity.Value * bmr;
             return tdee.Value;
+        }
+
+        public async Task<UserInforResponse> GetById(int id)
+        {
+            var user = await _userRepository.GetByIdAsync(id);
+            var res = _mapper.Map<UserInforResponse>(user);
+            return res;
         }
     }
 }

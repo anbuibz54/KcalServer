@@ -20,6 +20,12 @@ namespace KcalServer.Controllers.User
         public IActionResult Auth() {
             return Ok("Valid");
         }
+        [HttpGet,Route("{id}")]
+        public async Task<ApiResult<UserInforResponse>> GetById(int id)
+        {
+            var res = await _userService.GetById(id);
+            return new ApiResult<UserInforResponse>().Succeed(res);
+        }
         [HttpPost, Route("register")]
         public async Task<ApiResult<AuthResponse>> Register(AuthInput input)
         {
@@ -30,7 +36,7 @@ namespace KcalServer.Controllers.User
         [HttpPost, Route("login")]
         public async Task<ApiResult<AuthResponse>> Login(AuthInput input)
         {
-            var res = await _userService.Register(input);
+            var res = await _userService.Login(input);
 
             return new ApiResult<AuthResponse>().Succeed(res);
         }
