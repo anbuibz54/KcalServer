@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Domain.Common;
+using Microsoft.Extensions.DependencyInjection;
 using Services.ActivityRate;
 using Services.Claims;
+using Services.Gemini;
 using Services.Mapper;
 using Services.User;
 using Services.Weather;
@@ -16,10 +18,11 @@ namespace Services
     {
         public static IServiceCollection AddServices(this IServiceCollection services) {
             services.AddAutoMapper(typeof(IMapperMarkerAssembly));
-            services.AddTransient<IUserService, UserService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IActivityRateService, ActivityService>();
             services.AddScoped<IWeatherForeCast,WeatherForeCastService>();
             services.AddSingleton<IClaimService,ClaimService>();
+            services.AddSingleton<IAIService, GeminiService>();
             return services;
         }
     }
