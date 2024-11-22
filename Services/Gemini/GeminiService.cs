@@ -66,10 +66,10 @@ namespace Services.Gemini
             }
         }
             };
-
             return System.Text.Json.JsonSerializer.Serialize(requestBody);
         }
     }
+
     public class Response
     {
         public List<Candidate> Candidates { get; set; }

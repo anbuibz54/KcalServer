@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Food;
+using System;
 using System.Collections.Generic;
 
 namespace Infrastructure.Models;
@@ -26,4 +27,15 @@ public partial class Food
     public virtual ICollection<FavoriteFood> FavoriteFoods { get; set; } = new List<FavoriteFood>();
 
     public virtual ICollection<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
+    public void Update(Food e)
+    {
+        foreach (var item in e.GetType().GetProperties())
+        {
+            if (item.Name == "Id") continue;
+            if (item.PropertyType == typeof(int) && item.GetValue(e).ToString() == "0") continue;
+            if (item.PropertyType == typeof(double) && item.GetValue(e).ToString() == "0") continue;
+            if (item.GetValue(e) == null) continue;
+            this.GetType().GetProperty(item.Name).SetValue(this, item.GetValue(e));
+        }
+    }
 }

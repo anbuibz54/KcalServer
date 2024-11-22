@@ -39,7 +39,7 @@ namespace Infrastructure.Repositories
             return result;
         }
 
-        public async Task<T> GetByIdAsync(int id)
+        public async Task<T> GetByIdAsync(long id)
         {
             var entity = await  _DbSet.FindAsync(id);
             if (entity == null) throw new Exception("Not Found");

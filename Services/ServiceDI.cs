@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Services.ActivityRate;
 using Services.Claims;
+using Services.FoodServices;
 using Services.Gemini;
 using Services.Mapper;
 using Services.User;
@@ -23,6 +24,7 @@ namespace Services
             services.AddScoped<IWeatherForeCast,WeatherForeCastService>();
             services.AddSingleton<IClaimService,ClaimService>();
             services.AddSingleton<IAIService, GeminiService>();
+            services.AddScoped<IFoodServices,FoodService>();
             return services;
         }
     }
