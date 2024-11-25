@@ -1,6 +1,8 @@
 ﻿using Domain.Common;
 using Microsoft.Extensions.Options;
 using Models.Common;
+using Models.GeminiModels;
+using Models.GeminiModels.Response;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -25,7 +27,7 @@ namespace Services.Gemini
                 throw new Exception("Failed to use AI");
             }
             var responseContent = await res.Content.ReadAsStringAsync();
-            var responseModel = JsonConvert.DeserializeObject<Response>(responseContent);
+            var responseModel = JsonConvert.DeserializeObject<GeminiMessageResponse>(responseContent);
             var responseText = "";
             if (responseModel?.Candidates != null && responseModel.Candidates.Count > 0)
             {
@@ -68,25 +70,5 @@ namespace Services.Gemini
             };
             return System.Text.Json.JsonSerializer.Serialize(requestBody);
         }
-    }
-
-    public class Response
-    {
-        public List<Candidate> Candidates { get; set; }
-    }
-
-    public class Candidate
-    {
-        public Content Content { get; set; }
-    }
-
-    public class Content
-    {
-        public List<Part> Parts { get; set; }
-    }
-
-    public class Part
-    {
-        public string Text { get; set; }
     }
 }
