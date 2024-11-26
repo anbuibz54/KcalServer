@@ -3,6 +3,9 @@ using Domain.Common;
 using Domain.Food;
 using Infrastructure.Models;
 using Infrastructure.Repositories.FoodRepo;
+using Models.FoodModels;
+using Models.FoodModels.Constanst;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +21,7 @@ namespace Services.FoodServices
         public Task<FoodDomain> AddFood(FoodDomain food);
         public Task<FoodDomain> UpdateFood(int id,FoodDomain food);
         public Task<FoodDomain> DeleteFood(int id);
+        public Task<FoodDomain> AnalyzeFood(AnalyzeFoodRequest request);
     }
     public class FoodService(IFoodRepository foodRepository, IMapper mapper, IAIService aiService) : IFoodServices
     {
@@ -29,9 +33,19 @@ namespace Services.FoodServices
             return res;
         }
 
-        public Task<FoodDomain> AnalyzeFood(string image)
+        public async Task<FoodDomain> AnalyzeFood(AnalyzeFoodRequest request)
         {
-            throw new NotImplementedException();
+            var prompt = FoodPrompts.AnalyzeFoodPrompt;
+            var responseInJson = await aiService.TextAndImagePrompt(prompt,request.Image,request.MimeType);
+            var formatedJson = responseInJson.Replace(@"```json```", "");
+            try
+            {
+                var result = JsonConvert.DeserializeObject<FoodDomain>(formatedJson);
+                return result;
+            }
+            catch (Exception ex) {
+                throw new Exception("Can not analyze Food");
+            }
         }
 
         public async Task<FoodDomain> DeleteFood(int id)

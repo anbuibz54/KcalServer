@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models.GeminiModels.Request;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace Domain.Common
 {
     public interface IAIService
     {
-        public Task<string> GetResponse(string prompt);
+        public Task<string> TextPrompt(string prompt);
+        public Task<string> TextAndImagePrompt(string prompt, string image, string mimeType);
     }
 }

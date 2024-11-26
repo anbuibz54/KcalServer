@@ -1,6 +1,7 @@
 ﻿using Domain.Food;
 using Microsoft.AspNetCore.Mvc;
 using Models;
+using Models.FoodModels;
 using Services.FoodServices;
 
 namespace KcalServer.Controllers.Food
@@ -25,6 +26,12 @@ namespace KcalServer.Controllers.Food
         public async Task<ApiResult<FoodDomain>> Add([FromBody] FoodDomain food)
         {
             var result = await foodServices.AddFood(food);
+            return new ApiResult<FoodDomain>().Succeed(result);
+        }
+        [HttpPost("analyze")]
+        public async Task<ApiResult<FoodDomain>> Analyze([FromBody] AnalyzeFoodRequest request)
+        {
+            var result = await foodServices.AnalyzeFood(request);
             return new ApiResult<FoodDomain>().Succeed(result);
         }
         [HttpPut("update/{id}")]
