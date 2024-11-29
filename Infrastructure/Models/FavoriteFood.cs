@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Infrastructure.Seedwork;
+using System;
 using System.Collections.Generic;
 
 namespace Infrastructure.Models;
 
-public partial class FavoriteFood
+public partial class FavoriteFood: BaseEntity<FavoriteFood>
 {
     public long Id { get; set; }
 

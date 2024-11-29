@@ -37,7 +37,7 @@ namespace Services.FoodServices
         {
             var prompt = FoodPrompts.AnalyzeFoodPrompt;
             var responseInJson = await aiService.TextAndImagePrompt(prompt,request.Image,request.MimeType);
-            var formatedJson = responseInJson.Replace(@"```json```", "");
+            var formatedJson = responseInJson.Replace(@"```json", "").Replace(@"```","");
             try
             {
                 var result = JsonConvert.DeserializeObject<FoodDomain>(formatedJson);
