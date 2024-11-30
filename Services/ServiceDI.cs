@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Services.ActivityRate;
 using Services.Claims;
+using Services.FavoriteFoodServices;
 using Services.FoodServices;
 using Services.Gemini;
 using Services.Mapper;
@@ -25,6 +26,7 @@ namespace Services
             services.AddSingleton<IClaimService,ClaimService>();
             services.AddSingleton<IAIService, GeminiService>();
             services.AddScoped<IFoodServices,FoodService>();
+            services.AddScoped<IFavoriteFoodService,FavoriteFoodService>();
             return services;
         }
     }

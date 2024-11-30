@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Domain.Common;
 using Microsoft.EntityFrameworkCore;
+using Models.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +52,31 @@ namespace Infrastructure.Repositories
             var result = _DbSet.Update(entity);
             await _Context.SaveChangesAsync();
             return result.Entity;
+        }
+
+        public IQueryable<T1> ApplyPagination<T1>(IQueryable<T1> query, PaginationParams pagination)
+        {
+            query = query.Skip((pagination.PageNumber - 1) * pagination.PageSize).Take(pagination.PageSize);
+            return query;
+        }
+
+        public IQueryable<T1> ApplySorting<T1>(IQueryable<T1> query, SortParams sortParams)
+        {
+            if(sortParams != null && sortParams.Params != null && sortParams.Params.Count >0)
+            {
+                foreach(var sortParam in sortParams.Params)
+                {
+                    if (sortParam.IsDesc)
+                    {
+                        query = query.OrderByDescending(e => e.GetType().GetProperty(sortParam.SortKey));
+                    }
+                    else
+                    {
+                        query = query.OrderBy(e => e.GetType().GetProperty(sortParam.SortKey));
+                    }
+                }
+            }
+            return query;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Domain.ActivityRateDomain;
 using Domain.UserDomain;
 using Infrastructure.Repositories.ActivityRate;
+using Infrastructure.Repositories.FavoriteFoodRepo;
 using Infrastructure.Repositories.FoodRepo;
 using Infrastructure.Repositories.User;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,7 @@ namespace Infrastructure
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddScoped<IActivityRateRepository,ActivityRateRepository>();
             services.AddScoped<IFoodRepository,FoodRepository>();
+            services.AddScoped<IFavoriteFoodRepository,FavoriteFoodRepository>();
             return services;
         }
     }
