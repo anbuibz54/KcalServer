@@ -23,7 +23,7 @@ namespace KcalServer.Controllers.Food
             var result = await foodServices.GetAll();
             return new ApiResult<ICollection<FoodDomain>>().Succeed(result);
         }
-        [HttpGet("all/page")]
+        [HttpPost("all-by-page")]
         public async Task<ApiResult<PaginationResponse<FoodDomain>>> GetAllByPage([FromBody] ListFoodsRequest request)
         {
             var result = await foodServices.GetAll(request.PaginationParams,request.FoodFilterParams,request.SortParams);
