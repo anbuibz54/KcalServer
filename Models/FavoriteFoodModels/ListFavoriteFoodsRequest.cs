@@ -9,8 +9,8 @@ namespace Models.FavoriteFoodModels
 {
     public class ListFavoriteFoodsRequest
     {
-        public PaginationParams? paginationParams {  get; set; }
-        public SortParams? sortParams { get; set; }
-        public FavoriteFoodFilterParams? filterParams { get; set; }
+        public PaginationParams? PaginationParams {  get; set; }
+        public SortParams? SortParams { get; set; }
+        public FavoriteFoodFilterParams? FilterParams { get; set; }
     }
 }

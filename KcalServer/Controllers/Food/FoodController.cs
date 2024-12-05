@@ -1,6 +1,7 @@
 ﻿using Domain.Food;
 using Microsoft.AspNetCore.Mvc;
 using Models;
+using Models.Common;
 using Models.FoodModels;
 using Services.FoodServices;
 
@@ -21,6 +22,12 @@ namespace KcalServer.Controllers.Food
         {
             var result = await foodServices.GetAll();
             return new ApiResult<ICollection<FoodDomain>>().Succeed(result);
+        }
+        [HttpGet("all/page")]
+        public async Task<ApiResult<PaginationResponse<FoodDomain>>> GetAllByPage([FromBody] ListFoodsRequest request)
+        {
+            var result = await foodServices.GetAll(request.PaginationParams,request.FoodFilterParams,request.SortParams);
+            return new ApiResult<PaginationResponse<FoodDomain>>().Succeed(result);
         }
         [HttpPost("add")]
         public async Task<ApiResult<FoodDomain>> Add([FromBody] FoodDomain food)

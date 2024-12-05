@@ -3,6 +3,7 @@ using Domain.Common;
 using Domain.Food;
 using Infrastructure.Models;
 using Infrastructure.Repositories.FoodRepo;
+using Models.Common;
 using Models.FoodModels;
 using Models.FoodModels.Constanst;
 using Newtonsoft.Json;
@@ -18,6 +19,7 @@ namespace Services.FoodServices
     {
         public Task<FoodDomain> GetFood(int id);
         public Task<ICollection<FoodDomain>> GetAll();
+        public Task<PaginationResponse<FoodDomain>> GetAll(PaginationParams pagination, FoodFilterParams filterParams, SortParams sortParams);
         public Task<FoodDomain> AddFood(FoodDomain food);
         public Task<FoodDomain> UpdateFood(int id,FoodDomain food);
         public Task<FoodDomain> DeleteFood(int id);
@@ -61,6 +63,13 @@ namespace Services.FoodServices
         {
             var entities = await foodRepository.GetAllSync();
             var res = entities.Select(e => mapper.Map<FoodDomain>(e)).ToList();
+            return res;
+        }
+
+        public async Task<PaginationResponse<FoodDomain>> GetAll(PaginationParams pagination, FoodFilterParams filterParams, SortParams sortParams)
+        {
+            var response = await foodRepository.GetAllAsync(pagination, filterParams, sortParams);
+            var res = mapper.Map<PaginationResponse<FoodDomain>>(response);
             return res;
         }
 

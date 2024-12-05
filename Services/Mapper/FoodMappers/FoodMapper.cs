@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Domain.Food;
 using Infrastructure.Models;
+using Models.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace Services.Mapper.FoodMappers
         public FoodMapper() {
             CreateMap<Food,FoodDomain>();
             CreateMap<FoodDomain,Food>();
+            CreateMap<PaginationResponse<Food>, PaginationResponse<FoodDomain>>();
         }
     }
 }

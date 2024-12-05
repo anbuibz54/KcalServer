@@ -14,7 +14,7 @@ namespace KcalServer.Controllers.FavoriteFood
         [HttpGet("all")]
         public async Task<ApiResult<PaginationResponse<FavoriteFoodDomain>>> GetAll([FromBody] ListFavoriteFoodsRequest request) 
         {
-            var result = await favoriteFoodService.GetAll(request.paginationParams,request.sortParams,request.filterParams);
+            var result = await favoriteFoodService.GetAll(request.PaginationParams,request.SortParams,request.FilterParams);
             return new ApiResult<PaginationResponse<FavoriteFoodDomain>>().Succeed(result);
         }
         [HttpGet("{id:int}")]
