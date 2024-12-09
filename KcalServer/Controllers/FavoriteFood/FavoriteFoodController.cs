@@ -11,10 +11,10 @@ namespace KcalServer.Controllers.FavoriteFood
     [Route("api/[controller]")]
     public class FavoriteFoodController(IFavoriteFoodService favoriteFoodService): ControllerBase
     {
-        [HttpGet("all")]
-        public async Task<ApiResult<PaginationResponse<FavoriteFoodDomain>>> GetAll([FromBody] ListFavoriteFoodsRequest request) 
+        [HttpPost("all/{id:int}")]
+        public async Task<ApiResult<PaginationResponse<FavoriteFoodDomain>>> GetAll(int id,[FromBody] ListFavoriteFoodsRequest request) 
         {
-            var result = await favoriteFoodService.GetAll(request.PaginationParams,request.SortParams,request.FilterParams);
+            var result = await favoriteFoodService.GetAll(id,request.PaginationParams,request.SortParams,request.FilterParams);
             return new ApiResult<PaginationResponse<FavoriteFoodDomain>>().Succeed(result);
         }
         [HttpGet("{id:int}")]

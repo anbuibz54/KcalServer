@@ -15,7 +15,7 @@ namespace Services.FavoriteFoodServices
     public interface IFavoriteFoodService
     {
         public Task<FavoriteFoodDomain> GetFavoriteFoodById(int id);
-        public Task<PaginationResponse<FavoriteFoodDomain>> GetAll(PaginationParams paginationParams,SortParams sortParams, FavoriteFoodFilterParams filterParams);
+        public Task<PaginationResponse<FavoriteFoodDomain>> GetAll(int userId,PaginationParams paginationParams,SortParams sortParams, FavoriteFoodFilterParams filterParams);
         public Task<FavoriteFoodDomain> Add(UpsertFavoriteFoodParams item);
         public Task<FavoriteFoodDomain> Update(int id,UpsertFavoriteFoodParams item);
         public Task<FavoriteFoodDomain> Delete(int id);
@@ -38,9 +38,9 @@ namespace Services.FavoriteFoodServices
             return result;
         }
 
-        public async Task<PaginationResponse<FavoriteFoodDomain>> GetAll(PaginationParams paginationParams, SortParams sortParams, FavoriteFoodFilterParams filterParams)
+        public async Task<PaginationResponse<FavoriteFoodDomain>> GetAll(int userId,PaginationParams paginationParams, SortParams sortParams, FavoriteFoodFilterParams filterParams)
         {
-            var response = await favoriteFoodRepository.GetAllAsync(paginationParams, sortParams, filterParams);
+            var response = await favoriteFoodRepository.GetAllAsync(userId,paginationParams, sortParams, filterParams);
             var result = mapper.Map<PaginationResponse<FavoriteFoodDomain>>(response);
             return result;
         }

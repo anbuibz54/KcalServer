@@ -14,9 +14,10 @@ namespace Infrastructure.Repositories.FavoriteFoodRepo
     {
         public FavoriteFoodRepository(CoreContext context) : base(context) { }
 
-        public async Task<PaginationResponse<FavoriteFood>> GetAllAsync(PaginationParams pagination, SortParams sortParams, FavoriteFoodFilterParams filterParams)
+        public async Task<PaginationResponse<FavoriteFood>> GetAllAsync(int userId, PaginationParams pagination, SortParams sortParams, FavoriteFoodFilterParams filterParams)
         {
             var query = _DbSet.AsQueryable();
+            query = query.Include(ff => ff.Food).Where(ff => ff.UserId == userId);
             query = ApplyFilters(query, filterParams);
             query = ApplySorting(query, sortParams);
             query = ApplyPagination(query, pagination);

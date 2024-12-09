@@ -17,7 +17,7 @@ namespace Services.Mapper.FavoriteFoodMappers
             CreateMap<FavoriteFood,FavoriteFoodDomain>();
             CreateMap<FavoriteFoodDomain,FavoriteFood>();
             CreateMap<UpsertFavoriteFoodParams,FavoriteFood>();
-            CreateMap<PaginationResponse<FavoriteFood>,PaginationResponse<FavoriteFood>>();
+            CreateMap<PaginationResponse<FavoriteFood>,PaginationResponse<FavoriteFoodDomain>>();
         }
     }
 }

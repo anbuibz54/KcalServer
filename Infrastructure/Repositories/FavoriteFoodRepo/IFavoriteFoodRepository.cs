@@ -12,6 +12,6 @@ namespace Infrastructure.Repositories.FavoriteFoodRepo
 {
     public interface IFavoriteFoodRepository: IBaseRepository<FavoriteFood>
     {
-        public Task<PaginationResponse<FavoriteFood>> GetAllAsync(PaginationParams pagination, SortParams sortParams, FavoriteFoodFilterParams filterParams);
+        public Task<PaginationResponse<FavoriteFood>> GetAllAsync(int userId,PaginationParams pagination, SortParams sortParams, FavoriteFoodFilterParams filterParams);
     }
 }
