@@ -54,7 +54,9 @@ public partial class CoreContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-    public virtual DbSet<UsersRecipe> UsersRecipes { get; set; }
+    public virtual DbSet<FavoriteRecipes> UsersRecipes { get; set; }
+    public virtual DbSet<Tag> Tags { get; set; }
+    public virtual DbSet<RecipesTags> RecipesTags { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseNpgsql("Name=ConnectionStrings:Kcal");
@@ -229,6 +231,13 @@ public partial class CoreContext : DbContext
             entity.Property(e => e.Title).HasColumnName("title");
             entity.Property(e => e.TutorialUrl).HasColumnName("tutorial_url");
             entity.Property(e => e.UserId).HasColumnName("user_id");
+            entity.Property(e => e.Description).HasColumnName("description");
+            entity.Property(e => e.Thumbnail).HasColumnName("thumbnail");
+            entity.Property(e => e.DurationInMinutes).HasColumnName("durationInMinutes");
+            entity.Property(e => e.IsPublic).HasColumnName("isPublic");
+            entity.Property(e => e.Level).HasColumnName("level");
+            entity.Property(e => e.Instruction).HasColumnName("instruction");
+            entity.Property(e => e.Instruction).HasColumnType("json");
 
             entity.HasOne(d => d.User).WithMany(p => p.Recipes)
                 .HasForeignKey(d => d.UserId)
@@ -328,23 +337,38 @@ public partial class CoreContext : DbContext
                 .HasConstraintName("Users_activity_rate_id_fkey");
         });
 
-        modelBuilder.Entity<UsersRecipe>(entity =>
+        modelBuilder.Entity<FavoriteRecipes>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("Users_Recipes_pkey");
 
-            entity.ToTable("Users_Recipes");
+            entity.ToTable("FavoriteRecipes");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.RecipeId).HasColumnName("recipe_id");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
-            entity.HasOne(d => d.Recipe).WithMany(p => p.UsersRecipes)
+            entity.HasOne(d => d.Recipe).WithMany(p => p.FavoriteRecipes)
                 .HasForeignKey(d => d.RecipeId)
                 .HasConstraintName("Users_Recipes_recipe_id_fkey");
 
-            entity.HasOne(d => d.User).WithMany(p => p.UsersRecipes)
+            entity.HasOne(d => d.User).WithMany(p => p.FavoriteRecipes)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("Users_Recipes_user_id_fkey");
+        });
+        modelBuilder.Entity<Tag>(entity =>
+        {
+            entity.ToTable("Tags");
+        });
+        modelBuilder.Entity<RecipesTags>(entity =>
+        {
+            entity.HasKey(c => new { c.RecipeId, c.TagId });
+            entity.HasOne(d => d.Recipe).WithMany(p => p.RecipesTags)
+                .HasForeignKey(d => d.RecipeId)
+                .HasConstraintName("Recipes_Tags_recipe_id_fkey");
+
+            entity.HasOne(d => d.Tag).WithMany(p => p.RecipesTags)
+                .HasForeignKey(d => d.TagId)
+                .HasConstraintName("Recipes_Tags_tag_id_fkey");
         });
         modelBuilder.HasSequence<int>("seq_schema_version", "graphql").IsCyclic();
 

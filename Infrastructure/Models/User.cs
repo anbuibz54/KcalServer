@@ -37,7 +37,7 @@ public  class User
 
     public virtual ICollection<Shop> Shops { get; set; } = new List<Shop>();
 
-    public virtual ICollection<UsersRecipe> UsersRecipes { get; set; } = new List<UsersRecipe>();
+    public virtual ICollection<FavoriteRecipes> FavoriteRecipes { get; set; } = new List<FavoriteRecipes>();
     public void Update(User u)
     {
         foreach (var item in u.GetType().GetProperties())
