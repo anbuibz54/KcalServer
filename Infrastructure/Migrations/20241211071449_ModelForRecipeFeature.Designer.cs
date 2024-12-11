@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(CoreContext))]
-    [Migration("20241001163259_UpdateUserModel")]
-    partial class UpdateUserModel
+    [Migration("20241211071449_ModelForRecipeFeature")]
+    partial class ModelForRecipeFeature
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -115,6 +115,33 @@ namespace Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Favorite_Foods", (string)null);
+                });
+
+            modelBuilder.Entity("Infrastructure.Models.FavoriteRecipes", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("RecipeId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("recipe_id");
+
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id")
+                        .HasName("Users_Recipes_pkey");
+
+                    b.HasIndex("RecipeId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Favorite_Recipes", (string)null);
                 });
 
             modelBuilder.Entity("Infrastructure.Models.Food", b =>
@@ -313,6 +340,26 @@ namespace Infrastructure.Migrations
                         .HasColumnName("created_at")
                         .HasDefaultValueSql("now()");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
+                    b.Property<double?>("DurationInMinutes")
+                        .HasColumnType("double precision")
+                        .HasColumnName("durationInMinutes");
+
+                    b.Property<string>("Instruction")
+                        .HasColumnType("json")
+                        .HasColumnName("instruction");
+
+                    b.Property<bool?>("IsPublic")
+                        .HasColumnType("boolean")
+                        .HasColumnName("isPublic");
+
+                    b.Property<int?>("Level")
+                        .HasColumnType("integer")
+                        .HasColumnName("level");
+
                     b.Property<double?>("Price")
                         .HasColumnType("double precision")
                         .HasColumnName("price");
@@ -320,6 +367,10 @@ namespace Infrastructure.Migrations
                     b.Property<float?>("ReviewScore")
                         .HasColumnType("real")
                         .HasColumnName("review_score");
+
+                    b.Property<string>("Thumbnail")
+                        .HasColumnType("text")
+                        .HasColumnName("thumbnail");
 
                     b.Property<string>("Title")
                         .HasColumnType("text")
@@ -339,6 +390,21 @@ namespace Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Recipes");
+                });
+
+            modelBuilder.Entity("Infrastructure.Models.RecipesTags", b =>
+                {
+                    b.Property<long>("RecipeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TagId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("RecipeId", "TagId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("RecipesTags");
                 });
 
             modelBuilder.Entity("Infrastructure.Models.ScheduleItem", b =>
@@ -447,6 +513,31 @@ namespace Infrastructure.Migrations
                     b.ToTable("subscription", "realtime");
                 });
 
+            modelBuilder.Entity("Infrastructure.Models.Tag", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Icon")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Thumbnail")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tags", (string)null);
+                });
+
             modelBuilder.Entity("Infrastructure.Models.User", b =>
                 {
                     b.Property<long>("Id")
@@ -513,33 +604,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
-            modelBuilder.Entity("Infrastructure.Models.UsersRecipe", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<long?>("RecipeId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("recipe_id");
-
-                    b.Property<long?>("UserId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("Id")
-                        .HasName("Users_Recipes_pkey");
-
-                    b.HasIndex("RecipeId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Users_Recipes", (string)null);
-                });
-
             modelBuilder.Entity("Infrastructure.Models.FavoriteFood", b =>
                 {
                     b.HasOne("Infrastructure.Models.Food", "Food")
@@ -553,6 +617,23 @@ namespace Infrastructure.Migrations
                         .HasConstraintName("Favorite_Foods_user_id_fkey");
 
                     b.Navigation("Food");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Infrastructure.Models.FavoriteRecipes", b =>
+                {
+                    b.HasOne("Infrastructure.Models.Recipe", "Recipe")
+                        .WithMany("FavoriteRecipes")
+                        .HasForeignKey("RecipeId")
+                        .HasConstraintName("Users_Recipes_recipe_id_fkey");
+
+                    b.HasOne("Infrastructure.Models.User", "User")
+                        .WithMany("FavoriteRecipes")
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("Users_Recipes_user_id_fkey");
+
+                    b.Navigation("Recipe");
 
                     b.Navigation("User");
                 });
@@ -604,6 +685,27 @@ namespace Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Infrastructure.Models.RecipesTags", b =>
+                {
+                    b.HasOne("Infrastructure.Models.Recipe", "Recipe")
+                        .WithMany("RecipesTags")
+                        .HasForeignKey("RecipeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("Recipes_Tags_recipe_id_fkey");
+
+                    b.HasOne("Infrastructure.Models.Tag", "Tag")
+                        .WithMany("RecipesTags")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("Recipes_Tags_tag_id_fkey");
+
+                    b.Navigation("Recipe");
+
+                    b.Navigation("Tag");
+                });
+
             modelBuilder.Entity("Infrastructure.Models.ScheduleItem", b =>
                 {
                     b.HasOne("Infrastructure.Models.Recipe", "Recipe")
@@ -641,23 +743,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("ActivityRate");
                 });
 
-            modelBuilder.Entity("Infrastructure.Models.UsersRecipe", b =>
-                {
-                    b.HasOne("Infrastructure.Models.Recipe", "Recipe")
-                        .WithMany("UsersRecipes")
-                        .HasForeignKey("RecipeId")
-                        .HasConstraintName("Users_Recipes_recipe_id_fkey");
-
-                    b.HasOne("Infrastructure.Models.User", "User")
-                        .WithMany("UsersRecipes")
-                        .HasForeignKey("UserId")
-                        .HasConstraintName("Users_Recipes_user_id_fkey");
-
-                    b.Navigation("Recipe");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Infrastructure.Models.ActivityRate", b =>
                 {
                     b.Navigation("User1s");
@@ -677,11 +762,13 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Infrastructure.Models.Recipe", b =>
                 {
+                    b.Navigation("FavoriteRecipes");
+
                     b.Navigation("Ingredients");
 
-                    b.Navigation("ScheduleItems");
+                    b.Navigation("RecipesTags");
 
-                    b.Navigation("UsersRecipes");
+                    b.Navigation("ScheduleItems");
                 });
 
             modelBuilder.Entity("Infrastructure.Models.Shop", b =>
@@ -689,17 +776,22 @@ namespace Infrastructure.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("Infrastructure.Models.Tag", b =>
+                {
+                    b.Navigation("RecipesTags");
+                });
+
             modelBuilder.Entity("Infrastructure.Models.User", b =>
                 {
                     b.Navigation("FavoriteFoods");
+
+                    b.Navigation("FavoriteRecipes");
 
                     b.Navigation("MealSchedules");
 
                     b.Navigation("Recipes");
 
                     b.Navigation("Shops");
-
-                    b.Navigation("UsersRecipes");
                 });
 #pragma warning restore 612, 618
         }
