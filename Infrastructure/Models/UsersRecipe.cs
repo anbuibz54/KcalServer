@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Infrastructure.Models;
 
-public partial class FavoriteRecipes
+public partial class UsersRecipe
 {
     public long Id { get; set; }
 
