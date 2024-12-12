@@ -3,6 +3,7 @@ using Domain.UserDomain;
 using Infrastructure.Repositories.ActivityRate;
 using Infrastructure.Repositories.FavoriteFoodRepo;
 using Infrastructure.Repositories.FoodRepo;
+using Infrastructure.Repositories.TagRepo;
 using Infrastructure.Repositories.User;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -21,6 +22,7 @@ namespace Infrastructure
             services.AddScoped<IActivityRateRepository,ActivityRateRepository>();
             services.AddScoped<IFoodRepository,FoodRepository>();
             services.AddScoped<IFavoriteFoodRepository,FavoriteFoodRepository>();
+            services.AddScoped<ITagRepository, TagRepository>();
             return services;
         }
     }

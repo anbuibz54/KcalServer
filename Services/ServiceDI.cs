@@ -6,6 +6,7 @@ using Services.FavoriteFoodServices;
 using Services.FoodServices;
 using Services.Gemini;
 using Services.Mapper;
+using Services.TagServices;
 using Services.User;
 using Services.Weather;
 using System;
@@ -27,6 +28,7 @@ namespace Services
             services.AddSingleton<IAIService, GeminiService>();
             services.AddScoped<IFoodServices,FoodService>();
             services.AddScoped<IFavoriteFoodService,FavoriteFoodService>();
+            services.AddScoped<ITagService,TagService>();
             return services;
         }
     }
