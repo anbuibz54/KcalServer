@@ -1,21 +1,13 @@
-﻿using Domain.FavoriteFood;
-using Domain.Ingredient;
-using Domain.RecipesTags;
-using Models.RecipeModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using User = Domain.UserDomain.User;
-namespace Domain.Recipe
+
+namespace Models.RecipeModels
 {
-    public class RecipeDomain
+    public class UpsertRecipeRequest
     {
-        public long Id { get; set; }
-
-        public DateTime CreatedAt { get; set; }  = DateTime.Now;
-
         public long? UserId { get; set; }
 
         public string? Title { get; set; }
@@ -31,9 +23,7 @@ namespace Domain.Recipe
         public float? ReviewScore { get; set; }
 
         public double? Price { get; set; }
-        public ICollection<IngredientDomain>? Ingredients { get; set; } = new List<IngredientDomain>();
-        public User? User { get; set; }
-        public ICollection<FavoriteFoodDomain>? FavoriteFoods { get; set; } 
-        public ICollection<RecipesTagsDomain>? RecipesTags { get; set; }
+        public ICollection<int>? TagIds { get; set; }
+        public ICollection<int>? IngredientIds { get; set; }
     }
 }
