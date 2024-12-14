@@ -1,4 +1,6 @@
-﻿using Infrastructure.Models;
+﻿using AutoMapper;
+using Infrastructure.Models;
+using Infrastructure.Repositories.RecipesTagsRepo;
 using Microsoft.EntityFrameworkCore;
 using Models.Common;
 using Models.RecipeModels;
@@ -12,7 +14,24 @@ namespace Infrastructure.Repositories.RecipeRepo
 {
     public class RecipeRepository: BaseRepository<Recipe>, IRecipeRepository
     {
-        public RecipeRepository(CoreContext context) : base(context) { }
+        private readonly IRecipesTagsRepository _recipesTagsRepository;
+        private readonly IMapper _mapper;
+        public RecipeRepository(CoreContext context, IRecipesTagsRepository recipesTagsRepository, IMapper mapper ) : base(context) 
+        { 
+            this._recipesTagsRepository = recipesTagsRepository;
+            this._mapper = mapper;
+        }
+
+        public async Task<Recipe> AddAsync(UpsertRecipeRequest request)
+        {
+            var entity = _mapper.Map<Recipe>( request );
+            entity = await this.AddAsync( entity );
+            var listTags = request.TagIds.Select(tagId => new RecipesTags() { RecipeId =entity.Id, TagId =tagId }).ToList();
+            await _recipesTagsRepository.AddRange( listTags );
+            listTags = (await _recipesTagsRepository.GetAllByRecipeId(entity.Id)).ToList();
+            entity.RecipesTags = listTags;
+            return entity;
+        }
 
         public async Task<PaginationResponse<Recipe>> GetAll(PaginationParams pagination, SortParams sort, RecipeFilterParams filter)
         {
@@ -26,6 +45,12 @@ namespace Infrastructure.Repositories.RecipeRepo
             return result;
 
         }
+
+        public Task<Recipe> UpdateAsync(UpsertRecipeRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
         private IQueryable<Recipe> ApplyFilters(RecipeFilterParams filter, IQueryable<Recipe> query) {
 
             if (!String.IsNullOrEmpty(filter.Name)) {

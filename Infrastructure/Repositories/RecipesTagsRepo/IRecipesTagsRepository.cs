@@ -11,5 +11,8 @@ namespace Infrastructure.Repositories.RecipesTagsRepo
 {
     public interface IRecipesTagsRepository: IBaseRepository<RecipesTags>
     {
+        public Task<ICollection<RecipesTags>> GetAllByRecipeId(long recipeId);
+        public Task AddRange(List<RecipesTags> recipesTags);
+        public Task RemoveRange(long recipeId);
     }
 }

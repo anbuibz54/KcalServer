@@ -9,7 +9,7 @@ namespace Models.RecipeModels
     public class RecipeFilterParams
     {
         public string? Name { get; set; }
-        public int? TagId { get; set; }
+        public long? TagId { get; set; }
         public double? Kcal {  get; set; } 
 
     }

@@ -78,5 +78,6 @@ namespace Infrastructure.Repositories
             }
             return query;
         }
+
     }
 }

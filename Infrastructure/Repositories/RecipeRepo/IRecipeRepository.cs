@@ -13,5 +13,7 @@ namespace Infrastructure.Repositories.RecipeRepo
     public interface IRecipeRepository: IBaseRepository<Recipe>
     {
         Task<PaginationResponse<Recipe>> GetAll(PaginationParams pagination, SortParams sort, RecipeFilterParams filter);
+        Task<Recipe> AddAsync(UpsertRecipeRequest request);
+        Task<Recipe> UpdateAsync(UpsertRecipeRequest request);
     }
 }
