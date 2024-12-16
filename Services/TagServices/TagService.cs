@@ -48,7 +48,7 @@ namespace Services.TagServices
         {
             var entity = await tagRepository.GetByIdAsync(id);
             var newEntity = mapper.Map<Tag>(tag);
-            entity.Update(entity);
+            entity.Update(newEntity);
             entity = await tagRepository.UpdateAsync(entity);
             var res = mapper.Map<TagDomain>(entity);
             return res;

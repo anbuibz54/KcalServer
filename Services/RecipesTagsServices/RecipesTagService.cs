@@ -20,7 +20,6 @@ namespace Services.RecipesTagsServices
         public async Task<RecipesTagsDomain> Add(UpsertRecipesTagsModel upsert)
         {
             var entity = mapper.Map<RecipesTags>(upsert);
-            entity = await recipesTagsRepository.AddAsync(entity);
             var result = mapper.Map<RecipesTagsDomain>(entity);
             return result;
         }

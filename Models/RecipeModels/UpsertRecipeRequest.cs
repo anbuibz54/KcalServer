@@ -17,13 +17,13 @@ namespace Models.RecipeModels
         public string? Thumbnail { get; set; }
         public double? DurationInMinutes { get; set; }
         public bool? IsPublic { get; set; }
-        public string? Instruction { get; set; }
+        public List<InstructionContent>? Instructions { get; set; }
         public RecipeLevel? Level { get; set; }
 
         public float? ReviewScore { get; set; }
 
         public double? Price { get; set; }
         public List<long>? TagIds { get; set; }
-        public List<long>? IngredientIds { get; set; }
+        public List<RecipeIngredientModel>? Ingredients { get; set; }
     }
 }

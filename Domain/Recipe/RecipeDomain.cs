@@ -1,6 +1,7 @@
 ﻿using Domain.FavoriteFood;
 using Domain.Ingredient;
 using Domain.RecipesTags;
+using Domain.Tag;
 using Models.RecipeModels;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace Domain.Recipe
         public string? Thumbnail { get; set; }
         public double? DurationInMinutes { get; set; }
         public bool? IsPublic { get; set; }
-        public string? Instruction { get; set; }
+        public RecipeInstructionModel? Instruction { get; set; }
         public RecipeLevel? Level { get; set; }
 
         public float? ReviewScore { get; set; }
@@ -33,7 +34,6 @@ namespace Domain.Recipe
         public double? Price { get; set; }
         public ICollection<IngredientDomain>? Ingredients { get; set; } = new List<IngredientDomain>();
         public User? User { get; set; }
-        public ICollection<FavoriteFoodDomain>? FavoriteFoods { get; set; } 
-        public ICollection<RecipesTagsDomain>? RecipesTags { get; set; }
+        public List<TagDomain>? Tags { get; set; }
     }
 }

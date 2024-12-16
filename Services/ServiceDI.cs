@@ -6,6 +6,7 @@ using Services.FavoriteFoodServices;
 using Services.FoodServices;
 using Services.Gemini;
 using Services.Mapper;
+using Services.RecipeServices;
 using Services.RecipesTagsServices;
 using Services.TagServices;
 using Services.User;
@@ -31,6 +32,7 @@ namespace Services
             services.AddScoped<IFavoriteFoodService,FavoriteFoodService>();
             services.AddScoped<ITagService,TagService>();
             services.AddScoped<IRecipesTagsService, RecipesTagService>();
+            services.AddScoped<IRecipeService, RecipeService>();
             return services;
         }
     }

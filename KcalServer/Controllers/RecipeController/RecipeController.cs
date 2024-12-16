@@ -17,5 +17,17 @@ namespace KcalServer.Controllers.RecipeController
             var result = await recipeService.GetAll(request);
             return new ApiResult<PaginationResponse<RecipeDomain>>().Succeed(result);
         }
+        [HttpPost("add")]
+        public async Task<ApiResult<RecipeDomain>> Add([FromBody]UpsertRecipeRequest request)
+        {
+            var result = await recipeService.Add(request);
+            return new ApiResult<RecipeDomain>().Succeed(result);
+        }
+        [HttpPut("{id:long}")]
+        public async Task<ApiResult<RecipeDomain>> Update(long id,[FromBody]UpsertRecipeRequest request)
+        {
+            var result = await recipeService.Update(id,request);
+            return new ApiResult<RecipeDomain>().Succeed(result);
+        }
     }
 }
