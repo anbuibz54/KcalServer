@@ -1,13 +1,12 @@
 ﻿using Domain.Food;
+using Infrastructure.Seedwork;
 using System;
 using System.Collections.Generic;
 
 namespace Infrastructure.Models;
 
-public partial class Food
+public partial class Food: BaseEntity<Food>
 {
-    public long Id { get; set; }
-
     public string? Name { get; set; }
 
     public string? Description { get; set; }

@@ -9,9 +9,15 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories.RecipesTagsRepo
 {
-    public class RecipesTagsRepository: BaseRepository<RecipesTags>, IRecipesTagsRepository
+    public class RecipesTagsRepository: IRecipesTagsRepository
     {
-        public RecipesTagsRepository(CoreContext context) : base(context) { }
+        private readonly CoreContext _Context;
+        private readonly DbSet<RecipesTags> _DbSet;
+        public RecipesTagsRepository(CoreContext context) 
+        {
+            _Context = context;
+            _DbSet = _Context.RecipesTags;
+        }
 
         public async Task AddRange(List<RecipesTags> recipesTags)
         {

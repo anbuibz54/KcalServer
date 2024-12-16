@@ -23,7 +23,7 @@ namespace Models.RecipeModels
         public float? ReviewScore { get; set; }
 
         public double? Price { get; set; }
-        public ICollection<int>? TagIds { get; set; }
-        public ICollection<int>? IngredientIds { get; set; }
+        public List<long>? TagIds { get; set; }
+        public List<long>? IngredientIds { get; set; }
     }
 }

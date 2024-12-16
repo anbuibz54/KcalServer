@@ -1,12 +1,12 @@
-﻿using Models.RecipeModels;
+﻿using Infrastructure.Seedwork;
+using Models.RecipeModels;
 using System;
 using System.Collections.Generic;
 
 namespace Infrastructure.Models;
 
-public partial class Recipe
+public partial class Recipe: BaseEntity<Recipe>
 {
-    public long Id { get; set; }
 
     public DateTime CreatedAt { get; set; }
 

@@ -1,12 +1,12 @@
-﻿using Models.UserModels.Enums;
+﻿using Infrastructure.Seedwork;
+using Models.UserModels.Enums;
 using System;
 using System.Collections.Generic;
 
 namespace Infrastructure.Models;
 
-public  class User
+public  class User: BaseEntity<User>
 {
-    public long Id { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.Now;
 
@@ -38,16 +38,4 @@ public  class User
     public virtual ICollection<Shop> Shops { get; set; } = new List<Shop>();
 
     public virtual ICollection<FavoriteRecipes> FavoriteRecipes { get; set; } = new List<FavoriteRecipes>();
-    public void Update(User u)
-    {
-        foreach (var item in u.GetType().GetProperties())
-        {
-            if (item.Name == "Id") continue;
-            if (item.PropertyType == typeof(int) && item.GetValue(u).ToString() == "0") continue;
-            if (item.PropertyType == typeof(double) && item.GetValue(u).ToString() == "0") continue;
-            if (item.GetValue(u) == null) continue;
-            this.GetType().GetProperty(item.Name).SetValue(this, item.GetValue(u));
-        }
-        u.CreatedAt = DateTime.UtcNow;
-    }
 }

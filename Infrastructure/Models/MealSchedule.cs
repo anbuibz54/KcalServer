@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Infrastructure.Seedwork;
+using System;
 using System.Collections.Generic;
 
 namespace Infrastructure.Models;
 
-public partial class MealSchedule
+public partial class MealSchedule: BaseEntity<MealSchedule>
 {
-    public long Id { get; set; }
 
     public DateTime CreatedAt { get; set; }
 

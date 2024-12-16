@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Infrastructure.Seedwork;
+using System;
 using System.Collections.Generic;
 
 namespace Infrastructure.Models;
 
-public partial class Shop
+public partial class Shop: BaseEntity<Shop>
 {
-    public long Id { get; set; }
 
     public DateTime CreatedAt { get; set; }
 

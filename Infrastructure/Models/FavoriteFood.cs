@@ -6,8 +6,6 @@ namespace Infrastructure.Models;
 
 public partial class FavoriteFood: BaseEntity<FavoriteFood>
 {
-    public long Id { get; set; }
-
     public long? UserId { get; set; }
 
     public long? FoodId { get; set; }

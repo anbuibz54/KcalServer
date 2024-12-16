@@ -8,6 +8,7 @@ namespace Infrastructure.Seedwork
 {
     public abstract class BaseEntity<T> where T : class
     {
+        public long Id { get; set; }
         public void Update(T e)
         {
             foreach (var item in e.GetType().GetProperties())

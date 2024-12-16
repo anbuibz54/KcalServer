@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Infrastructure.Seedwork;
+using System;
 using System.Collections.Generic;
 
 namespace Infrastructure.Models;
 
-public partial class Subscription
+public partial class Subscription:BaseEntity<Subscription>
 {
-    public long Id { get; set; }
 
     public Guid SubscriptionId { get; set; }
 

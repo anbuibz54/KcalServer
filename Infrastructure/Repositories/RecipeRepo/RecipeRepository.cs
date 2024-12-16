@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Infrastructure.Models;
 using Infrastructure.Repositories.RecipesTagsRepo;
+using Infrastructure.Repositories.TagRepo;
 using Microsoft.EntityFrameworkCore;
 using Models.Common;
 using Models.RecipeModels;
@@ -12,23 +13,30 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories.RecipeRepo
 {
-    public class RecipeRepository: BaseRepository<Recipe>, IRecipeRepository
+    public class RecipeRepository : BaseRepository<Recipe>, IRecipeRepository
     {
+        private readonly ITagRepository _tagRepository;
         private readonly IRecipesTagsRepository _recipesTagsRepository;
         private readonly IMapper _mapper;
-        public RecipeRepository(CoreContext context, IRecipesTagsRepository recipesTagsRepository, IMapper mapper ) : base(context) 
-        { 
+        public RecipeRepository(CoreContext context, IRecipesTagsRepository recipesTagsRepository, ITagRepository tagRepository, IMapper mapper) : base(context)
+        {
             this._recipesTagsRepository = recipesTagsRepository;
+            this._tagRepository = tagRepository;
             this._mapper = mapper;
         }
 
         public async Task<Recipe> AddAsync(UpsertRecipeRequest request)
         {
-            var entity = _mapper.Map<Recipe>( request );
-            entity = await this.AddAsync( entity );
-            var listTags = request.TagIds.Select(tagId => new RecipesTags() { RecipeId =entity.Id, TagId =tagId }).ToList();
-            await _recipesTagsRepository.AddRange( listTags );
-            listTags = (await _recipesTagsRepository.GetAllByRecipeId(entity.Id)).ToList();
+            var entity = _mapper.Map<Recipe>(request);
+            entity = await this.AddAsync(entity);
+            var tags = await _tagRepository.GetByIdsAsync(request.TagIds);
+            var listTags = tags.Select(tag => new RecipesTags
+            {
+                RecipeId = entity.Id,
+                TagId = tag.Id,
+                Tag = tag // Include full Tag information
+            }).ToList();
+            await _recipesTagsRepository.AddRange(listTags);
             entity.RecipesTags = listTags;
             return entity;
         }
@@ -51,12 +59,14 @@ namespace Infrastructure.Repositories.RecipeRepo
             throw new NotImplementedException();
         }
 
-        private IQueryable<Recipe> ApplyFilters(RecipeFilterParams filter, IQueryable<Recipe> query) {
+        private IQueryable<Recipe> ApplyFilters(RecipeFilterParams filter, IQueryable<Recipe> query)
+        {
 
-            if (!String.IsNullOrEmpty(filter.Name)) {
+            if (!String.IsNullOrEmpty(filter.Name))
+            {
                 query = query.Where(r => r.Title.Contains(filter.Name));
             }
-            if(filter.TagId > 0 )
+            if (filter.TagId > 0)
             {
                 query = query.Where(r => r.RecipesTags.Any(rt => rt.TagId == filter.TagId));
             }

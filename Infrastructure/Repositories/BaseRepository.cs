@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Domain.Common;
+using Infrastructure.Seedwork;
 using Microsoft.EntityFrameworkCore;
 using Models.Common;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
-    public class BaseRepository<T> : IBaseRepository<T> where T : class
+    public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity<T>
     {
         public CoreContext _Context { get; set; }
         public DbSet<T> _DbSet { get; set; }
@@ -79,5 +80,11 @@ namespace Infrastructure.Repositories
             return query;
         }
 
+        public async Task<ICollection<T>> GetByIdsAsync(List<long> ids)
+        {
+            if (ids == null || ids.Count == 0) return [];
+            var entities = await _DbSet.Where(e => ids.Contains(e.Id)).ToListAsync();
+            return entities;
+        }
     }
 }

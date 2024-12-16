@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Infrastructure.Seedwork;
+using System;
 using System.Collections.Generic;
 
 namespace Infrastructure.Models;
 
-public partial class Product
+public partial class Product: BaseEntity<Product>
 {
-    public long Id { get; set; }
 
     public string? Name { get; set; }
 

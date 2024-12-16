@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Infrastructure.Seedwork;
+using System;
 using System.Collections.Generic;
 
 namespace Infrastructure.Models;
 
-public partial class Ingredient
+public partial class Ingredient: BaseEntity<Ingredient>
 {
-    public long Id { get; set; }
 
     public DateTime CreatedAt { get; set; }
 

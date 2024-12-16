@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories.RecipesTagsRepo
 {
-    public interface IRecipesTagsRepository: IBaseRepository<RecipesTags>
+    public interface IRecipesTagsRepository
     {
         public Task<ICollection<RecipesTags>> GetAllByRecipeId(long recipeId);
         public Task AddRange(List<RecipesTags> recipesTags);
